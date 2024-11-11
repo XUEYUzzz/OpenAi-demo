@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>AI聊天</title>
+  <style>
+    body{
+
+      .chat{
+        width:600px;
+        height:500px;
+        border:1px solid red ;
+        margin:0 auto 30px;
+      }
+        .message{
+            width:500px;
+            height:500px;
+            margin:0 auto 30px;
+        }
+
+
+    }
+  </style>
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-y/jquery/3.6.0/jquery.min.js" type="application/javascript"></script>
+  <script>
+    function doSend(){
+         let key=$("#t1").val();
+         let section=$('<section>').appendTo(".chat");
+         $("<img>").attr("src","imgs/user.png").appendTo(section);
+        $("<span>").html(key).appendTo(section);
+
+
+     /* console.log($(".chat").html());
+      console.log($("#t1".val()));*/
+      //
+      $.getJSON("chat1",
+          {"key":$("#t1").val(),
+              "temp":$("#temp").html()},
+          (ret)=>{
+        if(ret.error!=0){
+          alert("出错了:"+ret.message);
+        }
+        else{
+         let article=$("<article>");
+            $("<img>").attr("src","imgs/gpt.png").appendTo(article);
+            $("<span>").html(ret.data).appendTo(article);
+            $(".chat").append(article);
+            let height = $(".chat")[0].scrollHeight;
+            $(".chat")[0].scrollTo({top: height, behavior: 'smooth'});
+        }
+      })
+    }
+    function changeTemp(){
+        $("#temp").html($("input:eq(1)").val());
+    }
+
+  </script>
+</head>
+<body>
+    <div class="chat"></div>
+    <div class="message">
+    <input size=40 type="text" name="" id="t1" placeholder="请输入聊天内容">
+    <button onclick="doSend()">发送</button>
+        <br>
+        <input type="range" min="0" max="1" step="0.01" value="0.5" oninput="changeTemp()">
+        <span id="temp">0.5</span>
+    </div>
+</body>
+</html>

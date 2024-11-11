@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: ai-demo
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      base-url: https://api.chatanywhere.tech
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          top-p:
+
+      image:
+        options:
+          quality:
+          model: gpt-4o
+          width: 1024
+          height: 1024
+          n: 1
+
